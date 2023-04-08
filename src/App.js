@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from './Navbar/Navbar';
+import AddExpense from './AddExpense/AddExpense';
 import Expenses from './components/Expenses';
-import { useState } from 'react';
 
-const dummy = [
+const dummyExpenses = [
   {
     id: 'e1',
     title: 'Data-1',
     amount: 94.12,
     date: new Date(2020, 7, 14),
   },
-  { id: 'e2', title: 'data-4', amount: 799.49, date: new Date(2021, 2, 12) },
+  {
+    id: 'e2',
+    title: 'Data-4',
+    amount: 799.49,
+    date: new Date(2021, 2, 12),
+  },
   {
     id: 'e3',
     title: 'Data-2',
@@ -26,19 +31,27 @@ const dummy = [
 ];
 
 const App = () => {
-  
-const [expenses,setExpenses]= useState(dummy);
+  const [expenses, setExpenses] = useState(dummyExpenses);
 
-
-
-  
+  const addExpenseHandler = (expenseData) => {
+    setExpenses((prevExpenses) => {
+      return [...prevExpenses, expenseData];
+    });
+  };
 
   return (
     <div>
-      <Navbar/>
-      <Expenses items={dummy} />
+      <Navbar />
+      <main>
+        {/* <AddExpense onAddExpense={addExpenseHandler} /> */}
+        {expenses && expenses.length > 0 ? (
+          <Expenses items={expenses} />
+        ) : (
+          <p>No expenses found.</p>
+        )}
+      </main>
     </div>
   );
+};
 
-}
 export default App;
